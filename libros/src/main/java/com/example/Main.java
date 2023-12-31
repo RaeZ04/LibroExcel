@@ -1,11 +1,6 @@
 package com.example;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,8 +14,10 @@ public class Main {
         int eleccion;
         boolean dentro = true;
 
-        do {
+        admin admin = new admin("admin", "admin");
+        usuario usuarioEstandar = new usuario("user", "user");
 
+        do {
             System.out.println("");
             System.out.println("------------------");
             System.out.println(" Inicio De Sesión");
@@ -34,7 +31,7 @@ public class Main {
             String pass = InputOutput.leerString();
             System.out.println("");
 
-            if (usuario.equals("admin") && pass.equals("admin")) {
+            if (usuario.equals(admin.getNombreUsuario()) && pass.equals(admin.getContraseña())) {
 
                 boolean dentrosesion = true;
 
@@ -51,7 +48,7 @@ public class Main {
                     System.out.println("2. Buscar un libro");
                     System.out.println("3. Lista de libros");
                     System.out.println("4. Añadir Unidades");
-                    System.out.println("5. Borrar");
+                    System.out.println("5. Borrar Libros");
                     System.out.println("6. Cerrar Sesión");
                     System.out.println("7. Salir del programa");
                     System.out.println("");
@@ -77,14 +74,11 @@ public class Main {
 
                         libreria.agregarlibro(id, nombre, autor, cantidad);
 
-                    }
-
-                    else if (eleccion == 2) {
+                    } else if (eleccion == 2) {
 
                         int eleccion2;
 
                         do {
-
                             System.out.println("");
                             System.out.println("1. Buscar por título ");
                             System.out.println("2. Buscar por autor ");
@@ -97,84 +91,61 @@ public class Main {
 
                                 System.out.print("Introduce el título: ");
                                 String titulo = InputOutput.leerString();
-
                                 libreria.buscartitulo(titulo);
 
-                            }
-
-                            else if (eleccion2 == 2) {
+                            } else if (eleccion2 == 2) {
 
                                 System.out.print("Introduce el autor: ");
                                 String autor = InputOutput.leerString();
-
                                 libreria.buscarautor(autor);
 
-                            }
+                            } else if (eleccion2 == 3) {
 
-                            else if (eleccion2 == 3) {
-
-                            }
-
-                            else {
+                            } else {
 
                                 System.out.println("");
                                 System.out.println("Has elegido una opción incorrecta, elige del 1-3.");
                                 System.out.println("");
-
+                                
                             }
 
                         } while (eleccion2 != 3);
 
-                    }
-
-                    else if (eleccion == 3) {
+                    } else if (eleccion == 3) {
 
                         libreria.mostrarlibros();
 
-                    }
-
-                    else if (eleccion == 4) {
+                    } else if (eleccion == 4) {
 
                         System.out.print("Indica el ID del libro al que quieres añadir unidades: ");
                         int idbuscar = InputOutput.leerInt();
-
                         System.out.print("Indica cuantas unidades quieres añadir: ");
                         int unidadesañadidas = InputOutput.leerInt();
-
                         libreria.sumarlibros(idbuscar, unidadesañadidas);
 
-                    }
+                    } else if (eleccion == 5) {
 
-                    else if (eleccion == 5) {
-                        
                         libreria.vaciarLibros(excel);
                         System.out.println("Has borrado todos los libros.");
 
-                    }
+                    } else if (eleccion == 6) {
 
-                    else if (eleccion == 6) {
-                        
                         System.out.println("Has cerrado sesión.");
                         dentrosesion = false;
 
-                    }
-
-                    else if (eleccion == 7) {
+                    } else if (eleccion == 7) {
 
                         System.out.println("Has salido del programa.");
                         dentro = false;
 
-                    }
-
-                    else {
+                    } else {
 
                         System.out.println("Opción no valida, elija del 1-6, o 7 para salir.");
 
                     }
-
                 } while (eleccion != 7 && dentrosesion == true);
 
-            } else {
+            } else if (usuario.equals(usuarioEstandar.getNombreUsuario()) && pass.equals(usuarioEstandar.getContraseña())) {
 
                 boolean dentrosesion = true;
 
@@ -216,26 +187,17 @@ public class Main {
 
                                 System.out.print("Introduce el título: ");
                                 String titulo = InputOutput.leerString();
-
                                 libreria.buscartitulo(titulo);
 
-                            }
-
-                            else if (eleccion2 == 2) {
+                            } else if (eleccion2 == 2) {
 
                                 System.out.print("Introduce el autor: ");
                                 String autor = InputOutput.leerString();
-
                                 libreria.buscarautor(autor);
 
-                            }
+                            } else if (eleccion2 == 3) {
 
-                            else if (eleccion2 == 3) {
-                                
-
-                            }
-
-                            else {
+                            } else {
 
                                 System.out.println("");
                                 System.out.println("Has elegido una opción incorrecta, elige del 1-3.");
@@ -245,29 +207,21 @@ public class Main {
 
                         } while (eleccion2 != 3);
 
-                    }
-
-                    else if (eleccion == 2) {
+                    } else if (eleccion == 2) {
 
                         libreria.mostrarlibros();
 
-                    }
-                    
-                    else if (eleccion == 3) {
-                        
+                    } else if (eleccion == 3) {
+
                         System.out.println("Has cerrado sesión.");
                         dentrosesion = false;
 
-                    }
-
-                    else if (eleccion == 4) {
+                    } else if (eleccion == 4) {
 
                         System.out.println("Has salido del programa.");
                         dentro = false;
-
-                    }
-
-                    else {
+                        
+                    } else {
 
                         System.out.println("Opción no valida, elija del 1-3, o 4 para salir.");
 
@@ -275,11 +229,15 @@ public class Main {
 
                 } while (eleccion != 4 && dentrosesion == true);
 
+            } else {
+
+                System.out.println("Nombre de usuario o contraseña incorrectos");
+
             }
 
-        } while (dentro == true);
+        } while (dentro);
 
         libreria.guardarEnExcel(excel);
-
+        
     }
 }
